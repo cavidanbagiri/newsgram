@@ -1,0 +1,5 @@
+
+
+
+const MOBILESIZE = 600;
+const PLANSHETSIZE = 1000;
