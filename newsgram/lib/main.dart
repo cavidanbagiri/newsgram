@@ -36,11 +36,12 @@ class App extends StatelessWidget {
       initialRoute: Routes.LAYOUTSEPERATOR,
       getPages: RoutesPage.pages,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light().copyWith(
+      theme: ThemeData.dark().copyWith(
           scrollbarTheme: ScrollbarThemeData().copyWith(
             thumbColor: MaterialStateProperty.all(Colors.blue),
             isAlwaysShown: true
-          )
+          ),
+        scaffoldBackgroundColor: Colors.black
       ),
     );
   }

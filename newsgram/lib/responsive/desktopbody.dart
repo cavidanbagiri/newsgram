@@ -13,7 +13,7 @@ class DesktopBody extends StatelessWidget {
     return Scaffold(
       appBar: AppBarWidget(),
       body: HomePage(),
-      backgroundColor: Colors.black,
+      // backgroundColor: Colors.black,
     );
   }
 }

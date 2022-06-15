@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:newswebgram/routes/app_routes.dart';
 import 'package:newswebgram/widgets/circle_button.dart';
 
 class CreateNews extends StatelessWidget {
@@ -29,7 +31,7 @@ class CreateNews extends StatelessWidget {
             flex: 10,
             child: InkWell(
               onTap: (){
-                print('clicked');
+                Get.toNamed(Routes.CREATEPOST);
               },
               child: Container(
                 // margin: EdgeInsets.only(left: 5, right: 5),

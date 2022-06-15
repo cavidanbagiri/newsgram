@@ -46,7 +46,7 @@ class ChannelsWidgetInMainPage extends StatelessWidget {
                       child: const Text(
                         'Followers 225K',
                         style: TextStyle(
-                            color: Colors.white,
+                            color: Colors.grey,
                             fontSize: 16,
                             fontFamily: 'CormorantGaramond-Bold'),
                       ),

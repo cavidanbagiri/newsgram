@@ -77,7 +77,7 @@ class NewsWidget extends StatelessWidget {
             child: Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.all(3.0),
+                  padding: EdgeInsets.all(1.0),
                   child: TextButton.icon(
                     onPressed: () {},
                     icon: const Icon(
@@ -87,12 +87,12 @@ class NewsWidget extends StatelessWidget {
                     ),
                     label: const Text(
                       'Comment 13',
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                      style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(3.0),
+                  padding: EdgeInsets.all(1.0),
                   child: TextButton.icon(
                     onPressed: () {},
                     icon: const Icon(
@@ -102,22 +102,37 @@ class NewsWidget extends StatelessWidget {
                     ),
                     label: const Text(
                       'Share',
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                      style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(3.0),
+                  padding: EdgeInsets.all(1.0),
                   child: TextButton.icon(
                     onPressed: () {},
                     icon: const Icon(
-                      Icons.remove_red_eye,
+                      Icons.visibility_off,
                       color: Colors.grey,
                       size: 18,
                     ),
                     label: const Text(
                       'Hide',
-                      style: TextStyle(color: Colors.grey, fontSize: 12),
+                      style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(1.0),
+                  child: TextButton.icon(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.visibility,
+                      color: Colors.grey,
+                      size: 18,
+                    ),
+                    label: const Text(
+                      'Views  1300',
+                      style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
