@@ -1,9 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:newswebgram/controllers/signin_controller.dart';
 import 'package:newswebgram/routes/app_routes.dart';
 import 'circle_button.dart';
 import 'package:get/get.dart';
 
 PreferredSizeWidget? AppBarWidget() {
+  FirebaseAuth auth = FirebaseAuth.instance;
+  final controllers = SignInController();
   return PreferredSize(
     preferredSize: Size.fromHeight(60),
     child: Center(
@@ -75,11 +79,73 @@ PreferredSizeWidget? AppBarWidget() {
             icon: Icons.add,
             onPressed: () {},
           ),
+          //Showing User Login Username or Unknown
+          auth.currentUser?.email == null
+              ? Container(
+                  margin: EdgeInsets.only(right: 10, left: 5),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(12)),
+                  child: InkWell(
+                    onTap: () {},
+                    hoverColor: Colors.blue,
+                    child: Center(
+                      child: Row(
+                        children: [
+                          CircleButtonMenu(
+                            size: 24,
+                            icon: Icons.person,
+                            onPressed: () {},
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Text('Unknown'),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              : Container(
+                  margin: EdgeInsets.only(right: 10, left: 5),
+                  decoration:
+                      BoxDecoration(borderRadius: BorderRadius.circular(12)),
+                  child: InkWell(
+                    onTap: () {},
+                    hoverColor: Colors.blue,
+                    child: Center(
+                      child: Row(
+                        children: [
+                          CircleButtonMenu(
+                            size: 24,
+                            icon: Icons.person,
+                            onPressed: () {},
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(right: 8.0),
+                            child: Text('${auth.currentUser?.email.toString()}'),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+          //Showing Login icon or Logout Icon
+          auth.currentUser?.email == null
+          ?CircleButtonMenu(
+            size: 24,
+            icon: Icons.login,
+            onPressed: () {
+              Get.toNamed(Routes.SIGNIN);
+            },
+          ):
           CircleButtonMenu(
             size: 24,
-            icon: Icons.person,
-            onPressed: () {},
-          ),
+            icon: Icons.logout,
+            onPressed: () {
+              controllers.signOut();
+            },
+          )
+
         ],
       ),
     ),

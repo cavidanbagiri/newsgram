@@ -1,12 +1,16 @@
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:newswebgram/controllers/home_controller.dart';
 import 'package:newswebgram/widgets/channels_widget.dart';
-import 'package:newswebgram/widgets/create_news.dart';
+import 'package:newswebgram/widgets/create_news_widget.dart';
 import 'package:newswebgram/widgets/comments_widget.dart';
 
+// class HomePage extends GetView<HomePageController> {
 class HomePage extends StatelessWidget {
   HomePage({Key? key}) : super(key: key);
 
+  final controller = Get.put(HomePageController());
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +34,19 @@ class HomePage extends StatelessWidget {
               child: Column(
                 children: [
                   CreateNews(),
-                  NewsWidget(),
-                  NewsWidget(),
+                  ListView.builder(
+                    shrinkWrap: true,
+                      itemCount: controller.all_news.length,
+                      itemBuilder: (context, index){
+                        // return Text('list size is  ${controller.all_news.length}');
+                        return NewsWidget(model: controller.all_news[index],);
+                      }
+                  ),
                 ],
               )
             ),
             Container(
               width: MediaQuery.of(context).size.width*0.3,
-              // height: 600,
-              // color: Colors.blue,
               child: ChannelsWidget(),
             ),
           ],

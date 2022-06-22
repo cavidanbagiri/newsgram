@@ -1,8 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:newswebgram/controllers/comments_widget_controller.dart';
 import 'package:newswebgram/widgets/tempcomment.dart';
+import 'package:flutter_quill/flutter_quill.dart' as Quill;
 
 class NewsWidget extends StatelessWidget {
-  const NewsWidget({Key? key}) : super(key: key);
+  NewsWidget({Key? key, required this.model}) : super(key: key);
+
+  final controller = Get.put(CommentsWidgetControllers());
+
+  var model;
+
+  //Showing The Time
+  String getDateTime(DateTime t) {
+    final DateFormat format = DateFormat('yyyy-MM-dd');
+    String formatted = format.format(t);
+    return formatted;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +32,7 @@ class NewsWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          //UserName and Posted Time ection
+          //News & UserName & Posted Time section
           Container(
             width: MediaQuery.of(context).size.width * 0.38,
             height: MediaQuery.of(context).size.height * 0.1,
@@ -25,8 +40,9 @@ class NewsWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                //News Information
                 Row(
-                  children: const [
+                  children: [
                     Padding(
                       padding: EdgeInsets.all(3.0),
                       child: CircleAvatar(
@@ -36,17 +52,22 @@ class NewsWidget extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(3.0),
                       child: Text(
-                        'Mariya Zakharova',
-                        style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: 'CormorantGaramond-Bold'),
+                        '${model?.username}',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontFamily: 'CormorantGaramond-Bold'),
                       ),
                     ),
                   ],
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.only(top: 3.0, bottom: 3, right: 10),
                   child: Text(
-                    'Time 23:12:2022',
-                    style: TextStyle(color: Colors.white, fontSize: 15, fontFamily: 'Joan'),
+                    'Time ${getDateTime(model?.time.toDate())}',
+                    // 'Time 12',
+                    style: TextStyle(
+                        color: Colors.white, fontSize: 15, fontFamily: 'Joan'),
                   ),
                 ),
               ],
@@ -55,9 +76,10 @@ class NewsWidget extends StatelessWidget {
           //Title Section
           Container(
             margin: EdgeInsets.only(top: 0, bottom: 10, left: 10),
-            child: const Text(
-              'Russia used cluster munitions in Ukrainian city of Kharkiv - BBC News',
-              style: TextStyle(fontSize: 16, color: Colors.white, fontFamily: 'Joan'),
+            child: Text(
+              '${model?.title}',
+              style: TextStyle(
+                  fontSize: 17, color: Colors.white, fontFamily: 'Joan'),
             ),
           ),
           //Text, Video or Text Section
@@ -69,6 +91,22 @@ class NewsWidget extends StatelessWidget {
                   '/img/zakharova.jpg',
                   fit: BoxFit.cover,
                 )),
+          ),
+          //Subject Section
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.grey.shade800,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            padding: EdgeInsets.all(5),
+            margin: EdgeInsets.all(10),
+            child: Text(
+              '${model?.subject}',
+              style: TextStyle(
+                  fontSize: 15, color: Colors.white, fontFamily: 'Abel'),
+            ),
           ),
           //Notifications Sections
           Container(
@@ -85,9 +123,12 @@ class NewsWidget extends StatelessWidget {
                       color: Colors.grey,
                       size: 18,
                     ),
-                    label: const Text(
-                      'Comment 13',
-                      style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold),
+                    label: Text(
+                      'Comment ${model?.comments?.length}',
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -102,7 +143,10 @@ class NewsWidget extends StatelessWidget {
                     ),
                     label: const Text(
                       'Share',
-                      style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -117,7 +161,10 @@ class NewsWidget extends StatelessWidget {
                     ),
                     label: const Text(
                       'Hide',
-                      style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -130,9 +177,12 @@ class NewsWidget extends StatelessWidget {
                       color: Colors.grey,
                       size: 18,
                     ),
-                    label: const Text(
-                      'Views  1300',
-                      style: TextStyle(color: Colors.grey, fontSize: 12, fontWeight: FontWeight.bold),
+                    label: Text(
+                      'Views ${model?.showcount} ',
+                      style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
@@ -141,9 +191,55 @@ class NewsWidget extends StatelessWidget {
           ),
           //Comment Section
           Container(
+            margin: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: Colors.grey.shade800,
+              ),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Column(
+              children: [
+                Container(
+                  child: Quill.QuillToolbar.basic(
+                      controller: controller.quill_text_controller),
+                ),
+                Container(
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(left: 10, right: 5),
+                          padding: EdgeInsets.all(8),
+                          height: 100,
+                          child: Quill.QuillEditor.basic(
+                            controller: controller.quill_text_controller,
+                            readOnly: false, // true for view only mode
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  child: ElevatedButton(
+                    child: Text('Add Comment'),
+                    onPressed: () {
+                      controller.addComment(
+                          model.id,
+                          controller.quill_text_controller.plainTextEditingValue.text,
+                          'cavidanbagiri@gmail.com');
+                    },
+                  ),
+                )
+              ],
+            ),
+          ),
+          Container(
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: somes(),
+              itemCount: model?.comments.length,
               itemBuilder: (context, index) {
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -163,14 +259,15 @@ class NewsWidget extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.only(
                             top: 8, bottom: 8, left: 5, right: 5),
-                        // padding: EdgeInsets.all(15),
-
                         child: Text(
-                          some[index],
-                          style: TextStyle(color: Colors.white, fontSize: 14, fontFamily: 'Abel'),
+                          '${model?.comments[index].values.join('')}',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontFamily: 'Abel'),
                         ),
                       ),
-                    )
+                    ),
                   ],
                 );
               },

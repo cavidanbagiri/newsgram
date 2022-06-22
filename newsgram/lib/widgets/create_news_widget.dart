@@ -51,29 +51,13 @@ class CreateNews extends StatelessWidget {
                       disabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Colors.grey),
                       ),
-                      hintText: 'Create News',
+                      hintText: 'What is Happening',
                       hintStyle: TextStyle(color: Colors.white70, fontSize: 16, fontFamily: 'CormorantGaramond-Bold'),
                     ),
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: CircleButtonMenu(
-              size: 20,
-              icon: Icons.photo,
-              onPressed: () {},
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: CircleButtonMenu(
-              size: 20,
-              icon: Icons.video_call_rounded,
-              onPressed: () {},
             ),
           ),
         ],
