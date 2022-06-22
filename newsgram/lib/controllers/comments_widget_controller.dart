@@ -1,11 +1,13 @@
 
 import 'package:get/get.dart';
 import 'package:flutter_quill/flutter_quill.dart' as Quill;
-
+import 'home_controller.dart';
 import '../services/news_services.dart';
 
 class CommentsWidgetControllers extends GetxController{
 
+
+  // final controller = Get.put(HomePageController());
 
   //***********************************************************************     Quill COntroller      *************************************
   Quill.QuillController quill_text_controller = Quill.QuillController.basic();

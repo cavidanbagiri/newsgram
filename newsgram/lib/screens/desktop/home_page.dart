@@ -27,23 +27,25 @@ class HomePage extends StatelessWidget {
               color: Colors.blue,
             ):
             Container(),
-            Container(
-              width: MediaQuery.of(context).size.width*0.45,
-              // height: 600,
-              // color: Colors.white,
-              child: Column(
-                children: [
-                  CreateNews(),
-                  ListView.builder(
-                    shrinkWrap: true,
-                      itemCount: controller.all_news.length,
-                      itemBuilder: (context, index){
-                        // return Text('list size is  ${controller.all_news.length}');
-                        return NewsWidget(model: controller.all_news[index],);
-                      }
-                  ),
-                ],
-              )
+            Obx(()=>
+              Container(
+                width: MediaQuery.of(context).size.width*0.45,
+                // height: 600,
+                // color: Colors.white,
+                child: Column(
+                  children: [
+                    CreateNews(),
+                    ListView.builder(
+                      shrinkWrap: true,
+                        itemCount: controller.all_news.length,
+                        itemBuilder: (context, index){
+                          // return Text('list size is  ${controller.all_news.length}');
+                          return NewsWidget(model: controller.all_news[index],);
+                        }
+                    ),
+                  ],
+                )
+              ),
             ),
             Container(
               width: MediaQuery.of(context).size.width*0.3,

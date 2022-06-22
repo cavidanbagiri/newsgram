@@ -11,19 +11,19 @@ class HomePageController extends GetxController{
   final news_instance = FirebaseFirestore.instance.collection('news');
   //**********************************************************************************************************************************************
 
+  //***********************************************************************     Take News and add the list      *************************************
+  var all_news = RxList<NewsModel>([]);
+  //**********************************************************************************************************************************************
+
   @override
   void onInit() {
     all_news.bindStream(getNewsFromNewsCollection());
     super.onInit();
   }
 
-  //***********************************************************************     Take News and add the list      *************************************
-  var all_news = RxList<NewsModel>([]);
-  //**********************************************************************************************************************************************
-
-
   //Take All News From News Collection
   Stream<List<NewsModel>> getNewsFromNewsCollection(){
+    print('reading getnewspage');
     return news_instance.snapshots().map((query) {
       return query.docs.map((doc) {
         return NewsModel.readData(doc);

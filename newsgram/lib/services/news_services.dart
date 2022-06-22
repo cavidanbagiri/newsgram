@@ -64,12 +64,7 @@ class NewsServices {
   //Adding Comments
   Future<void> addComment(String id, String comments, String username)async{
     try{
-      print('id is ${id}');
-      //Get Current Article From Firebase news collection
       final current_article = await news_instance.doc(id);
-      // for(int i=0;i<current_article.comments.length;i++){
-      //
-      // }
       await current_article.update({
         'comments':FieldValue.arrayUnion([{
           username : comments
