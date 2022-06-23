@@ -1,11 +1,13 @@
+import 'dart:js';
+
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:newswebgram/controllers/auth_controllers/signin_controller.dart';
 import 'package:newswebgram/routes/app_routes.dart';
+import 'package:newswebgram/widgets/user_created_widgets/popmenubuttonforsign.dart';
 import 'circle_button.dart';
 import 'package:get/get.dart';
-
 
 PreferredSizeWidget? AppBarWidget() {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -98,7 +100,6 @@ PreferredSizeWidget? AppBarWidget() {
           //Showing User Login Username or Unknown
           auth.currentUser?.email == null
               ? Container(
-                  // margin: EdgeInsets.only(right: 10, left: 5),
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(12)),
                   child: InkWell(
@@ -113,7 +114,7 @@ PreferredSizeWidget? AppBarWidget() {
                             onPressed: () {},
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
+                            padding: const EdgeInsets.only(right: 8.0, left: 3),
                             child: Text('Unknown'),
                           )
                         ],
@@ -137,37 +138,51 @@ PreferredSizeWidget? AppBarWidget() {
                             onPressed: () {},
                           ),
                           Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Text('${auth.currentUser?.email.toString()}'),
+                            padding: const EdgeInsets.only(right: 8.0, left: 3),
+                            child:
+                                Text('${auth.currentUser?.email.toString()}'),
                           )
                         ],
                       ),
                     ),
                   ),
                 ),
-          //Showing Login icon or Logout Icon
-          auth.currentUser?.email == null
-          ?Container(
-            margin: EdgeInsets.only(right: 10),
-            child: CircleButtonMenu(
-              size: 24,
-              icon: Icons.login,
-              onPressed: () {
-                Get.toNamed(Routes.SIGNIN);
-              },
-            ),
-          ):
-          Container(
-            margin: EdgeInsets.only(right: 10),
-            child: CircleButtonMenu(
-              size: 24,
-              icon: Icons.logout,
-              onPressed: () {
-                controllers.signOut();
-              },
-            ),
-          )
+          auth.currentUser?.email == null?
+            PopUpMenuButtonUserLogin():PopUpMenuButtonUserLogout(),
 
+    // Container(
+    //     margin: EdgeInsets.only(right: 10),
+    //     child: CircleButtonMenu(
+    //       size: 24,
+    //       icon: Icons.login,
+    //       onPressed: () {
+    //         Get.toNamed(Routes.SIGNIN);
+    //       },
+    //     ),
+    //   ),
+          
+          //Showing Login icon or Logout Icon
+          // auth.currentUser?.email == null
+          // ?Container(
+          //   margin: EdgeInsets.only(right: 10),
+          //   child: CircleButtonMenu(
+          //     size: 24,
+          //     icon: Icons.login,
+          //     onPressed: () {
+          //       Get.toNamed(Routes.SIGNIN);
+          //     },
+          //   ),
+          // ):
+          // Container(
+          //   margin: EdgeInsets.only(right: 10),
+          //   child: CircleButtonMenu(
+          //     size: 24,
+          //     icon: Icons.logout,
+          //     onPressed: () {
+          //       controllers.signOut();
+          //     },
+          //   ),
+          // )
         ],
       ),
     ),
