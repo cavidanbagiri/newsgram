@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newswebgram/routes/app_routes.dart';
-import 'package:newswebgram/widgets/circle_button.dart';
+import 'package:newswebgram/widgets/user_created_widgets/circle_button.dart';
 
 class CreateNews extends StatelessWidget {
   const CreateNews({Key? key}) : super(key: key);

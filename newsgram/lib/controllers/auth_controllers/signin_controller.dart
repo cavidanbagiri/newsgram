@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:newswebgram/services/signin_services.dart';
+import 'package:newswebgram/services/auth_services/signin_services.dart';
 
 class SignInController extends GetxController{
 

@@ -64,7 +64,7 @@ class NewsWidget extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: 3.0, bottom: 3, right: 10),
                   child: Text(
-                    'Time ${getDateTime(model?.time.toDate())}',
+                    '${getDateTime(model?.time.toDate())}',
                     // 'Time 12',
                     style: TextStyle(
                         color: Colors.white, fontSize: 15, fontFamily: 'Joan'),
@@ -87,8 +87,8 @@ class NewsWidget extends StatelessWidget {
             child: Container(
                 // margin: EdgeInsets.only(bottom: 10),
                 width: MediaQuery.of(context).size.width * 0.38,
-                child: Image.asset(
-                  '/img/zakharova.jpg',
+                child: Image.network(
+                  model?.imageurl,
                   fit: BoxFit.cover,
                 )),
           ),
@@ -120,7 +120,7 @@ class NewsWidget extends StatelessWidget {
                     onPressed: () {},
                     icon: const Icon(
                       Icons.comment,
-                      color: Colors.grey,
+                      color: Colors.blue,
                       size: 18,
                     ),
                     label: Text(
@@ -138,7 +138,7 @@ class NewsWidget extends StatelessWidget {
                     onPressed: () {},
                     icon: const Icon(
                       Icons.share,
-                      color: Colors.grey,
+                      color: Colors.green,
                       size: 18,
                     ),
                     label: const Text(
@@ -156,7 +156,7 @@ class NewsWidget extends StatelessWidget {
                     onPressed: () {},
                     icon: const Icon(
                       Icons.visibility_off,
-                      color: Colors.grey,
+                      color: Colors.red,
                       size: 18,
                     ),
                     label: const Text(
@@ -173,12 +173,12 @@ class NewsWidget extends StatelessWidget {
                   child: TextButton.icon(
                     onPressed: () {},
                     icon: const Icon(
-                      Icons.visibility,
-                      color: Colors.grey,
+                      Icons.bookmark,
+                      color: Colors.orange,
                       size: 18,
                     ),
                     label: Text(
-                      'Views ${model?.showcount} ',
+                      'Bookmark',
                       style: TextStyle(
                           color: Colors.grey,
                           fontSize: 12,
@@ -189,7 +189,59 @@ class NewsWidget extends StatelessWidget {
               ],
             ),
           ),
-          //Comment Section
+          //Comments section
+          ConstrainedBox(
+            constraints:const BoxConstraints (maxHeight: 400,),
+            child: Container(
+              // height: 500,
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: model?.comments.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                              top: 5, bottom: 5, left: 5, right: 5),
+                          child: CircleAvatar(
+                              backgroundImage: AssetImage('img/zakharova.jpg')),
+                        ),
+                        flex: 1,
+                      ),
+                      Expanded(
+                        flex: 9,
+                        child: Container(
+                          margin: const EdgeInsets.only(
+                              top: 8, bottom: 8, left: 5, right: 5),
+                          child: Text(
+                            '${model?.comments[index].values.join('')}',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 14,
+                                fontFamily: 'Abel'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                },
+              ),
+            ),
+          ),
+          //Read More Section
+          // InkWell(
+          //   onTap: () {},
+          //   child: Container(
+          //     margin: EdgeInsets.only(top: 0, bottom: 10, right: 10),
+          //     child: const Text('Read More',
+          //         style: TextStyle(color: Colors.white, fontFamily: 'Abel'),
+          //         textAlign: TextAlign.right),
+          //   ),
+          // ),
+          //Comment Text Place
           Container(
             margin: EdgeInsets.all(10),
             decoration: BoxDecoration(
@@ -236,53 +288,6 @@ class NewsWidget extends StatelessWidget {
               ],
             ),
           ),
-          Container(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: model?.comments.length,
-              itemBuilder: (context, index) {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                            top: 5, bottom: 5, left: 5, right: 5),
-                        child: CircleAvatar(
-                            backgroundImage: AssetImage('img/zakharova.jpg')),
-                      ),
-                      flex: 1,
-                    ),
-                    Expanded(
-                      flex: 9,
-                      child: Container(
-                        margin: const EdgeInsets.only(
-                            top: 8, bottom: 8, left: 5, right: 5),
-                        child: Text(
-                          '${model?.comments[index].values.join('')}',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontFamily: 'Abel'),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
-            ),
-          ),
-          //Read More Section
-          InkWell(
-            onTap: () {},
-            child: Container(
-              margin: EdgeInsets.only(top: 0, bottom: 10, right: 10),
-              child: const Text('Read More',
-                  style: TextStyle(color: Colors.white, fontFamily: 'Abel'),
-                  textAlign: TextAlign.right),
-            ),
-          )
         ],
       ),
     );

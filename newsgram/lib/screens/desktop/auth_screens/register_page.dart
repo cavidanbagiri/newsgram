@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/register_controller.dart';
-import '../../widgets/app_bar.dart';
+import '../../../controllers/auth_controllers/register_controller.dart';
+import '../../../widgets/user_created_widgets/app_bar.dart';
 
 class RegisterPage extends GetView<RegisterController> {
   const RegisterPage({Key? key}) : super(key: key);

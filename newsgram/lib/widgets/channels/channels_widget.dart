@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:newswebgram/widgets/channels_widget_in_main_page.dart';
+import 'channels_widget_in_main_page.dart';
 
 class ChannelsWidget extends StatelessWidget {
   const ChannelsWidget({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class ChannelsWidget extends StatelessWidget {
           ),
           Center(
             child: Container(
-              margin: EdgeInsets.all(5),
+              margin: EdgeInsets.only(top: 5, bottom: 5, left: 5, right: 15),
               child: Center(
                 child: TextField(
                   decoration: InputDecoration(

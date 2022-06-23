@@ -1,8 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:newswebgram/bindings/signin_bindings.dart';
-import 'package:newswebgram/controllers/signin_controller.dart';
+import 'package:newswebgram/bindings/auth_bindings/signin_bindings.dart';
+import 'package:newswebgram/controllers/auth_controllers/signin_controller.dart';
 import 'package:newswebgram/routes/app_routes.dart';
 import 'package:newswebgram/routes/route_pages.dart';
 import 'package:url_strategy/url_strategy.dart';

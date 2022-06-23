@@ -4,10 +4,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:newswebgram/controllers/signin_controller.dart';
+import 'package:newswebgram/controllers/auth_controllers/signin_controller.dart';
 import 'package:newswebgram/routes/app_routes.dart';
 
-import '../../widgets/app_bar.dart';
+import '../../../widgets/user_created_widgets/app_bar.dart';
 
 class SignInPage extends GetView<SignInController> {
   const SignInPage({Key? key}) : super(key: key);

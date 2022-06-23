@@ -1,9 +1,11 @@
+import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:newswebgram/controllers/signin_controller.dart';
+import 'package:newswebgram/controllers/auth_controllers/signin_controller.dart';
 import 'package:newswebgram/routes/app_routes.dart';
 import 'circle_button.dart';
 import 'package:get/get.dart';
+
 
 PreferredSizeWidget? AppBarWidget() {
   FirebaseAuth auth = FirebaseAuth.instance;
@@ -26,6 +28,7 @@ PreferredSizeWidget? AppBarWidget() {
           ),
         ),
         actions: [
+          //Search Section
           Center(
             child: Container(
               height: 40,
@@ -57,6 +60,7 @@ PreferredSizeWidget? AppBarWidget() {
               ),
             ),
           ),
+          //Home Page
           CircleButtonMenu(
             size: 24,
             icon: Icons.home,
@@ -64,16 +68,28 @@ PreferredSizeWidget? AppBarWidget() {
               Get.toNamed(Routes.HOME);
             },
           ),
-          CircleButtonMenu(
-            size: 24,
-            icon: Icons.bookmark,
-            onPressed: () {},
+          //BookMark Page
+          Badge(
+            badgeContent: Text('4', style: TextStyle(fontSize: 11)),
+            badgeColor: Colors.red,
+            child: CircleButtonMenu(
+              size: 24,
+              icon: Icons.bookmark,
+              onPressed: () {
+                Get.toNamed(Routes.BOOKMARK);
+              },
+            ),
           ),
-          CircleButtonMenu(
-            size: 24,
-            icon: Icons.notifications,
-            onPressed: () {},
+          //Notifications Page
+          Badge(
+            badgeContent: Text('9', style: TextStyle(fontSize: 11)),
+            child: CircleButtonMenu(
+              size: 24,
+              icon: Icons.notifications,
+              onPressed: () {},
+            ),
           ),
+          //Create Channels Page
           CircleButtonMenu(
             size: 24,
             icon: Icons.add,
@@ -82,7 +98,7 @@ PreferredSizeWidget? AppBarWidget() {
           //Showing User Login Username or Unknown
           auth.currentUser?.email == null
               ? Container(
-                  margin: EdgeInsets.only(right: 10, left: 5),
+                  // margin: EdgeInsets.only(right: 10, left: 5),
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(12)),
                   child: InkWell(
@@ -106,7 +122,7 @@ PreferredSizeWidget? AppBarWidget() {
                   ),
                 )
               : Container(
-                  margin: EdgeInsets.only(right: 10, left: 5),
+                  // margin: EdgeInsets.only(right: 10, left: 5),
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(12)),
                   child: InkWell(
@@ -131,19 +147,25 @@ PreferredSizeWidget? AppBarWidget() {
                 ),
           //Showing Login icon or Logout Icon
           auth.currentUser?.email == null
-          ?CircleButtonMenu(
-            size: 24,
-            icon: Icons.login,
-            onPressed: () {
-              Get.toNamed(Routes.SIGNIN);
-            },
+          ?Container(
+            margin: EdgeInsets.only(right: 10),
+            child: CircleButtonMenu(
+              size: 24,
+              icon: Icons.login,
+              onPressed: () {
+                Get.toNamed(Routes.SIGNIN);
+              },
+            ),
           ):
-          CircleButtonMenu(
-            size: 24,
-            icon: Icons.logout,
-            onPressed: () {
-              controllers.signOut();
-            },
+          Container(
+            margin: EdgeInsets.only(right: 10),
+            child: CircleButtonMenu(
+              size: 24,
+              icon: Icons.logout,
+              onPressed: () {
+                controllers.signOut();
+              },
+            ),
           )
 
         ],

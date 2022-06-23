@@ -2,7 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:newswebgram/services/register_services.dart';
+import 'package:newswebgram/services/auth_services/register_services.dart';
 
 class RegisterController extends GetxController{
 

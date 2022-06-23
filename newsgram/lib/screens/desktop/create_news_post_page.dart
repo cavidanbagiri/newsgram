@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:newswebgram/controllers/create_news_post_controller.dart';
-import '../../widgets/app_bar.dart';
+import '../../widgets/user_created_widgets/app_bar.dart';
 import 'package:flutter_quill/flutter_quill.dart' as Quill;
 
 class CreateNewsPostPage extends GetView<CreateNewsPostController> {
