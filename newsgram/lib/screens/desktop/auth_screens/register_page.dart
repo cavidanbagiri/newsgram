@@ -14,7 +14,7 @@ class RegisterPage extends GetView<RegisterController> {
       appBar: AppBarWidget(),
       body: Center(
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.5,
+          height: MediaQuery.of(context).size.height * 0.6,
           width: MediaQuery.of(context).size.width * 0.3,
           decoration: BoxDecoration(
               border: Border.all(color: Colors.blue),
@@ -24,6 +24,7 @@ class RegisterPage extends GetView<RegisterController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
+                //Email
                 Container(
                   child: TextField(
                     decoration: InputDecoration(
@@ -49,6 +50,37 @@ class RegisterPage extends GetView<RegisterController> {
                         fontFamily: 'CormorantGaramond-Bold'),
                   ),
                 ),
+                //Username
+                Container(
+                  child: TextField(
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue, width: 1),
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.blue),
+                        borderRadius: BorderRadius.circular(22),
+                      ),
+                      hintText: 'Username',
+                      hintStyle: const TextStyle(
+                          color: Colors.white70,
+                          fontSize: 16,
+                          fontFamily: 'CormorantGaramond-Bold'),
+                      suffixIcon: const Icon(Icons.person),
+                    ),
+                    controller: controller.username_controller,
+                    style: const TextStyle(
+                        color: Colors.white70,
+                        fontSize: 16,
+                        fontFamily: 'CormorantGaramond-Bold'),
+                  ),
+                ),
+                //Gender
+                Container(
+                  child: Obx(()=>controller.genderDropDown()),
+                ),
+                //Password
                 Container(
                   child: TextField(
                     decoration: InputDecoration(
@@ -75,6 +107,7 @@ class RegisterPage extends GetView<RegisterController> {
                         fontFamily: 'CormorantGaramond-Bold'),
                   ),
                 ),
+                //Confirm
                 Container(
                   child: TextField(
                     decoration: InputDecoration(
@@ -101,6 +134,7 @@ class RegisterPage extends GetView<RegisterController> {
                         fontFamily: 'CormorantGaramond-Bold'),
                   ),
                 ),
+                //Adding Database operations
                 Center(
                   child: Container(
                     padding: EdgeInsets.all(15),
@@ -115,13 +149,9 @@ class RegisterPage extends GetView<RegisterController> {
                               controller.confirm_controller.text.trim()) {
                             controller.registerUser(
                                 controller.email_controller.text.trim(),
-                                controller.password_controller.text.trim());
-                            Get.snackbar(
-                                'Successfully Registered',
-                                'Successfully Registered',
-                                snackPosition: SnackPosition.BOTTOM,
-                                backgroundColor: Colors.blue,
-                                colorText: Colors.black
+                                controller.username_controller.text.trim(),
+                                controller.gender.value.toString(),
+                                controller.password_controller.text.trim(),
                             );
                           }
                           else{
@@ -146,3 +176,28 @@ class RegisterPage extends GetView<RegisterController> {
     );
   }
 }
+
+
+// child: TextField(
+//   decoration: InputDecoration(
+//     border: OutlineInputBorder(
+//       borderSide: BorderSide(color: Colors.blue, width: 1),
+//       borderRadius: BorderRadius.circular(22),
+//     ),
+//     enabledBorder: OutlineInputBorder(
+//       borderSide: BorderSide(color: Colors.blue),
+//       borderRadius: BorderRadius.circular(22),
+//     ),
+//     hintText: 'Gender',
+//     hintStyle: const TextStyle(
+//         color: Colors.white70,
+//         fontSize: 16,
+//         fontFamily: 'CormorantGaramond-Bold'),
+//     suffixIcon: const Icon(Icons.person),
+//   ),
+//   controller: controller.sex_controller,
+//   style: const TextStyle(
+//       color: Colors.white70,
+//       fontSize: 16,
+//       fontFamily: 'CormorantGaramond-Bold'),
+// ),

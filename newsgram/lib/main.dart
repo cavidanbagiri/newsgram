@@ -6,11 +6,13 @@ import 'package:newswebgram/controllers/auth_controllers/signin_controller.dart'
 import 'package:newswebgram/routes/app_routes.dart';
 import 'package:newswebgram/routes/route_pages.dart';
 import 'package:url_strategy/url_strategy.dart';
+import 'package:get_storage/get_storage.dart';
 
 Future main() async {
 
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
 
   await Firebase.initializeApp(
     options: const FirebaseOptions(

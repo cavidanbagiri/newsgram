@@ -23,7 +23,6 @@ class HomePageController extends GetxController{
 
   //Take All News From News Collection
   Stream<List<NewsModel>> getNewsFromNewsCollection(){
-    print('reading getnewspage');
     return news_instance.snapshots().map((query) {
       return query.docs.map((doc) {
         return NewsModel.readData(doc);

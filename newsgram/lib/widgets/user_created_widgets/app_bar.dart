@@ -1,4 +1,3 @@
-import 'dart:js';
 
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,9 +10,10 @@ import 'package:get/get.dart';
 
 PreferredSizeWidget? AppBarWidget() {
   FirebaseAuth auth = FirebaseAuth.instance;
-  final controllers = SignInController();
+  final user_controller = Get.put(SignInController());
+
   return PreferredSize(
-    preferredSize: Size.fromHeight(60),
+    preferredSize: const Size.fromHeight(60),
     child: Center(
       child: AppBar(
         backgroundColor: Colors.black87,
@@ -40,11 +40,11 @@ PreferredSizeWidget? AppBarWidget() {
                 child: TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.white, width: 1),
+                      borderSide: const BorderSide(color: Colors.white, width: 1),
                       borderRadius: BorderRadius.circular(22),
                     ),
                     enabledBorder: OutlineInputBorder(
-                      borderSide: BorderSide(color: Colors.blue),
+                      borderSide: const BorderSide(color: Colors.blue),
                       borderRadius: BorderRadius.circular(22),
                     ),
                     hintText: 'Search ...',
@@ -69,10 +69,11 @@ PreferredSizeWidget? AppBarWidget() {
             onPressed: () {
               Get.toNamed(Routes.HOME);
             },
+            tooltip: 'Home',
           ),
           //BookMark Page
           Badge(
-            badgeContent: Text('4', style: TextStyle(fontSize: 11)),
+            badgeContent: const Text('4', style: TextStyle(fontSize: 11)),
             badgeColor: Colors.red,
             child: CircleButtonMenu(
               size: 24,
@@ -80,15 +81,17 @@ PreferredSizeWidget? AppBarWidget() {
               onPressed: () {
                 Get.toNamed(Routes.BOOKMARK);
               },
+              tooltip: 'BookMark',
             ),
           ),
           //Notifications Page
           Badge(
-            badgeContent: Text('9', style: TextStyle(fontSize: 11)),
+            badgeContent: const Text('9', style: TextStyle(fontSize: 11)),
             child: CircleButtonMenu(
               size: 24,
               icon: Icons.notifications,
               onPressed: () {},
+              tooltip: 'Notification',
             ),
           ),
           //Create Channels Page
@@ -96,6 +99,7 @@ PreferredSizeWidget? AppBarWidget() {
             size: 24,
             icon: Icons.add,
             onPressed: () {},
+            tooltip: 'Create Channel',
           ),
           //Showing User Login Username or Unknown
           auth.currentUser?.email == null
@@ -112,10 +116,11 @@ PreferredSizeWidget? AppBarWidget() {
                             size: 24,
                             icon: Icons.person,
                             onPressed: () {},
+                            tooltip: 'Profile',
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8.0, left: 3),
-                            child: Text('Unknown'),
+                          const Padding(
+                            padding: EdgeInsets.only(right: 8.0, left: 3),
+                            child: Text('Unknown',),
                           )
                         ],
                       ),
@@ -123,7 +128,6 @@ PreferredSizeWidget? AppBarWidget() {
                   ),
                 )
               : Container(
-                  // margin: EdgeInsets.only(right: 10, left: 5),
                   decoration:
                       BoxDecoration(borderRadius: BorderRadius.circular(12)),
                   child: InkWell(
@@ -136,11 +140,15 @@ PreferredSizeWidget? AppBarWidget() {
                             size: 24,
                             icon: Icons.person,
                             onPressed: () {},
+                            tooltip: 'Profile',
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0, left: 3),
                             child:
-                                Text('${auth.currentUser?.email.toString()}'),
+                                // Text('${user_controller.current_user?.username}'),
+                                // Obx(()=>Text('${user_controller.current_user?[0]?.username ?? 'Unknown'}'),),
+                                Obx(()=>Text('${user_controller.current_user?[0]?.username?? 'Unknown'.obs}'),),
+                                // Text('cavidan'),
                           )
                         ],
                       ),
@@ -149,40 +157,6 @@ PreferredSizeWidget? AppBarWidget() {
                 ),
           auth.currentUser?.email == null?
             PopUpMenuButtonUserLogin():PopUpMenuButtonUserLogout(),
-
-    // Container(
-    //     margin: EdgeInsets.only(right: 10),
-    //     child: CircleButtonMenu(
-    //       size: 24,
-    //       icon: Icons.login,
-    //       onPressed: () {
-    //         Get.toNamed(Routes.SIGNIN);
-    //       },
-    //     ),
-    //   ),
-          
-          //Showing Login icon or Logout Icon
-          // auth.currentUser?.email == null
-          // ?Container(
-          //   margin: EdgeInsets.only(right: 10),
-          //   child: CircleButtonMenu(
-          //     size: 24,
-          //     icon: Icons.login,
-          //     onPressed: () {
-          //       Get.toNamed(Routes.SIGNIN);
-          //     },
-          //   ),
-          // ):
-          // Container(
-          //   margin: EdgeInsets.only(right: 10),
-          //   child: CircleButtonMenu(
-          //     size: 24,
-          //     icon: Icons.logout,
-          //     onPressed: () {
-          //       controllers.signOut();
-          //     },
-          //   ),
-          // )
         ],
       ),
     ),

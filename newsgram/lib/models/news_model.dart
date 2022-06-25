@@ -25,7 +25,6 @@ class NewsModel{
     subject = snapshot['subject'];
     community = snapshot['community'];
     imageurl = snapshot['image_path'];
-    // this.username = snapshot['videourl'];
     showcount = snapshot['showcounts'];
     comments = snapshot['comments'];
     time = snapshot['time'];

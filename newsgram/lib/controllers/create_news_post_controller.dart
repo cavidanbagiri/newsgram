@@ -45,7 +45,6 @@ class CreateNewsPostController extends GetxController {
       String? subject, FilePickerResult? result) async {
     try {
       if (result != null) {
-        print('here work');
         String get_news_id =
             await news_service.addNews(username, community, title, subject);
         await news_service.addImage(get_news_id, result);
