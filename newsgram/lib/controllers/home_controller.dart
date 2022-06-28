@@ -2,32 +2,26 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:newswebgram/services/news_services.dart';
 import '../models/news_model.dart';
 
 class HomePageController extends GetxController{
 
   //***********************************************************************     Create News Collection Instance      *************************************
-  final news_instance = FirebaseFirestore.instance.collection('news');
+  //final news_instance = FirebaseFirestore.instance.collection('news');
   //**********************************************************************************************************************************************
 
+  final news_service = NewsServices();
+
   //***********************************************************************     Take News and add the list      *************************************
-  var all_news = RxList<NewsModel>([]);
+  // var all_news = RxList<NewsModel>([]);
+  RxList all_news = RxList<NewsModel>([]);
   //**********************************************************************************************************************************************
 
   @override
   void onInit() {
-    all_news.bindStream(getNewsFromNewsCollection());
+    all_news.bindStream(news_service.getNewsFromNewsCollection());
     super.onInit();
-  }
-
-  //Take All News From News Collection
-  Stream<List<NewsModel>> getNewsFromNewsCollection(){
-    return news_instance.snapshots().map((query) {
-      return query.docs.map((doc) {
-        return NewsModel.readData(doc);
-      }).toList();
-    });
   }
 
 }

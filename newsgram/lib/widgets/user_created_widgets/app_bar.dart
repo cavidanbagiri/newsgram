@@ -1,4 +1,3 @@
-
 import 'package:badges/badges.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +39,8 @@ PreferredSizeWidget? AppBarWidget() {
                 child: TextField(
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.white, width: 1),
+                      borderSide:
+                          const BorderSide(color: Colors.white, width: 1),
                       borderRadius: BorderRadius.circular(22),
                     ),
                     enabledBorder: OutlineInputBorder(
@@ -72,18 +72,59 @@ PreferredSizeWidget? AppBarWidget() {
             tooltip: 'Home',
           ),
           //BookMark Page
-          Badge(
-            badgeContent: const Text('4', style: TextStyle(fontSize: 11)),
-            badgeColor: Colors.red,
-            child: CircleButtonMenu(
-              size: 24,
-              icon: Icons.bookmark,
-              onPressed: () {
-                Get.toNamed(Routes.BOOKMARK);
-              },
-              tooltip: 'BookMark',
-            ),
-          ),
+
+          auth.currentUser?.email != null
+              ? Badge(
+                  // badgeContent: Obx(
+                  //   () => Text(
+                  //     '${user_controller.current_user?[0]?.bookmarks?.length}',
+                  //     style: const TextStyle(fontSize: 11),
+                  //   ),
+                  // ),
+                  badgeColor: Colors.red,
+                  child: CircleButtonMenu(
+                    size: 24,
+                    icon: Icons.bookmark,
+                    onPressed: () {
+                      Get.toNamed(Routes.BOOKMARK);
+                    },
+                    tooltip: 'BookMark',
+                  ),
+                )
+              : CircleButtonMenu(
+                  size: 24,
+                  icon: Icons.bookmark,
+                  onPressed: () {
+                    Get.toNamed(Routes.BOOKMARK);
+                  },
+                  tooltip: 'BookMark',
+                ),
+
+          // auth.currentUser?.email != null
+          //     ? Badge(
+          //         badgeContent: Obx(() => Text(
+          //               '${user_controller.current_user?[0]?.bookmarks?.length}',
+          //               style: const TextStyle(fontSize: 11),
+          //             )),
+          //         badgeColor: Colors.red,
+          //         child: CircleButtonMenu(
+          //           size: 24,
+          //           icon: Icons.bookmark,
+          //           onPressed: () {
+          //             Get.toNamed(Routes.BOOKMARK);
+          //           },
+          //           tooltip: 'BookMark',
+          //         ),
+          //       )
+          //     : CircleButtonMenu(
+          //         size: 24,
+          //         icon: Icons.bookmark,
+          //         onPressed: () {
+          //           Get.toNamed(Routes.BOOKMARK);
+          //         },
+          //         tooltip: 'BookMark',
+          //       ),
+
           //Notifications Page
           Badge(
             badgeContent: const Text('9', style: TextStyle(fontSize: 11)),
@@ -120,7 +161,9 @@ PreferredSizeWidget? AppBarWidget() {
                           ),
                           const Padding(
                             padding: EdgeInsets.only(right: 8.0, left: 3),
-                            child: Text('Unknown',),
+                            child: Text(
+                              'Unknown',
+                            ),
                           )
                         ],
                       ),
@@ -144,19 +187,19 @@ PreferredSizeWidget? AppBarWidget() {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 8.0, left: 3),
-                            child:
-                                // Text('${user_controller.current_user?.username}'),
-                                // Obx(()=>Text('${user_controller.current_user?[0]?.username ?? 'Unknown'}'),),
-                                Obx(()=>Text('${user_controller.current_user?[0]?.username?? 'Unknown'.obs}'),),
-                                // Text('cavidan'),
+                            // child: Obx(
+                            //   () => Text(
+                            //       '${user_controller.current_user?[0]?.username ?? 'Unknown'.obs}'),
+                            // ),
                           )
                         ],
                       ),
                     ),
                   ),
                 ),
-          auth.currentUser?.email == null?
-            PopUpMenuButtonUserLogin():PopUpMenuButtonUserLogout(),
+          auth.currentUser?.email == null
+              ? const PopUpMenuButtonUserLogin()
+              : PopUpMenuButtonUserLogout(),
         ],
       ),
     ),

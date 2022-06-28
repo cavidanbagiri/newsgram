@@ -8,8 +8,10 @@ import 'package:flutter_quill/flutter_quill.dart' as Quill;
 class NewsWidget extends StatelessWidget {
   NewsWidget({Key? key, required this.model}) : super(key: key);
 
+  //calling Comments Widget Controller
   final controller = Get.put(CommentsWidgetControllers());
 
+  //This is for handling each news
   var model;
 
   //Showing The Time
@@ -168,21 +170,36 @@ class NewsWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.all(1.0),
-                  child: TextButton.icon(
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.bookmark,
-                      color: Colors.orange,
-                      size: 18,
-                    ),
-                    label: Text(
-                      'Bookmark',
-                      style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold),
+                Obx(
+                  () => DecoratedBox(
+                    decoration: BoxDecoration(
+                        border: controller.showBorder.value
+                            ? Border(
+                                bottom:
+                                    BorderSide(color: Colors.orange, width: 2))
+                            : null),
+                    child: Padding(
+                      padding: EdgeInsets.all(1.0),
+                      child: TextButton.icon(
+                        onHover: (hovered) {
+                          controller.showBorder.value = hovered;
+                        },
+                        onPressed: () {
+                          controller.addBookmarks(model?.id);
+                        },
+                        icon: const Icon(
+                          Icons.bookmark,
+                          color: Colors.orange,
+                          size: 18,
+                        ),
+                        label: Text(
+                          'Bookmark',
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -191,7 +208,9 @@ class NewsWidget extends StatelessWidget {
           ),
           //Comments section
           ConstrainedBox(
-            constraints:const BoxConstraints (maxHeight: 400,),
+            constraints: const BoxConstraints(
+              maxHeight: 400,
+            ),
             child: Container(
               // height: 500,
               child: ListView.builder(
@@ -280,7 +299,8 @@ class NewsWidget extends StatelessWidget {
                     onPressed: () {
                       controller.addComment(
                           model.id,
-                          controller.quill_text_controller.plainTextEditingValue.text,
+                          controller
+                              .quill_text_controller.plainTextEditingValue.text,
                           'cavidanbagiri@gmail.com');
                     },
                   ),

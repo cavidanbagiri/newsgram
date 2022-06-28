@@ -9,7 +9,11 @@ import '../routes/app_routes.dart';
 
 class NewsServices {
   //***********************************************************************     Firebase      **********************************
+  //Gettings News Collection
   final news_instance = FirebaseFirestore.instance.collection('news');
+  //Getttings User Collection
+  final current_user_details = FirebaseFirestore.instance.collection('users');
+  //Gettings Storage for taking News Images
   final storage = FirebaseStorage.instance;
   //**********************************************************************************************************************************************
 
@@ -24,7 +28,7 @@ class NewsServices {
         'subject': subject ?? '',
         'showcounts': '0',
         'comments': [],
-        'time':DateTime.now()
+        'time': DateTime.now()
       });
       Get.toNamed(Routes.HOME);
       return some.id;
@@ -59,49 +63,48 @@ class NewsServices {
     }
   }
 
-
-
   //Adding Comments
-  Future<void> addComment(String id, String comments, String username)async{
-    try{
+  Future<void> addComment(String id, String comments, String username) async {
+    try {
       final current_article = await news_instance.doc(id);
       await current_article.update({
-        'comments':FieldValue.arrayUnion([{
-          username : comments
-        }])
+        'comments': FieldValue.arrayUnion([
+          {username: comments}
+        ])
       });
-    }
-    catch(e){
+    } catch (e) {
       print('Error happen inside of Add comment FUnction on News Service');
     }
+  }
+
+  //Adding Bookmarks Section
+  Future<void> addingBookmarks(String? user_id, String news_id) async {
+    final change_bookmarks = await current_user_details.doc(user_id);
+    // change_bookmarks.collection('bookmarksTest').add({
+    //   'newsid':news_id
+    // });
+    change_bookmarks.update({
+      'bookmarks': FieldValue.arrayUnion([news_id])
+    }).then((value) {
+      Get.snackbar(
+          'Bookmakrs added successfully', 'Bookmakrs added successfully',
+          backgroundColor: Colors.blue,
+          colorText: Colors.black,
+          snackPosition: SnackPosition.BOTTOM);
+    }).catchError((onError) {
+      print('cant add bookmarks');
+    });
+  }
+
+  //Take All News From News Collection
+  Stream<List<NewsModel>> getNewsFromNewsCollection(){
+    return news_instance.snapshots().map((query) {
+      return query.docs.map((doc) {
+        return NewsModel.readData(doc);
+      }).toList();
+    });
   }
 
 
 
 }
-  
-//Adding Title and Subject to Database
-// Future<void> addNews(
-//     String username, String? community, String title, String? subject) async {
-//   if (!title.isEmpty) {
-//     news_instance
-//         .add({
-//           'username': username,
-//           'community': community ?? '',
-//           'title': title,
-//           'subject': subject ?? '',
-//           'showcounts': '0',
-//           'comments': [],
-//         })
-//         .then((value) => Get.snackbar(
-//             'Succesfully Created News', 'Successfully Created News',
-//             backgroundColor: Colors.blue,
-//             colorText: Colors.black,
-//             snackPosition: SnackPosition.BOTTOM))
-//         .catchError((e) => print('Error Happen ${e.toString()}'));
-//   } else {
-//     Get.snackbar('Title Cant Be Empty', 'Title Cant Be Empty',
-//         backgroundColor: Colors.blue,
-//         colorText: Colors.black,
-//         snackPosition: SnackPosition.BOTTOM);
-//   }

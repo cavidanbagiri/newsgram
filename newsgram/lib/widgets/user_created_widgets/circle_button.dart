@@ -5,12 +5,13 @@ class CircleButtonMenu extends StatelessWidget {
     required this.size,
     required this.icon,
     required this.onPressed,
-    required this.tooltip
+    required this.tooltip,
   }) : super(key: key);
 
   final IconData icon;
   final VoidCallback onPressed;
   final size ;
+  var icon_color;
   String tooltip;
 
   @override
@@ -24,6 +25,7 @@ class CircleButtonMenu extends StatelessWidget {
         child: Center(
           child: IconButton(
             icon: Icon(icon, color: Colors.black87),
+            color: icon_color,
             iconSize: this.size,
             onPressed: onPressed,
             hoverColor: Colors.blue,
